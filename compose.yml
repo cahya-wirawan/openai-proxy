@@ -1,0 +1,14 @@
+services:
+  proxy:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      PROXY_API_KEY: "${PROXY_API_KEY:-local-secret}"
+      CODEX_DEFAULT_MODEL: "${CODEX_DEFAULT_MODEL:-gpt-5.4}"
+      CODEX_WORKSPACE: /workspace
+      CODEX_ALLOW_WORKSPACE_WRITE: "${CODEX_ALLOW_WORKSPACE_WRITE:-false}"
+    volumes:
+      - "${HOME}/.codex:/root/.codex"
+      - ".:/workspace"
+    restart: unless-stopped
